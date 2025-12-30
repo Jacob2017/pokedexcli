@@ -54,6 +54,11 @@ func init() {
 			description: "Inspect caught <pokemon> in your pokedex",
 			callback:    commandInspect,
 		},
+		"pokedex": {
+			name:        "pokedex",
+			description: "List all the pokemon in your pokedex",
+			callback:    commandPokedex,
+		},
 	}
 
 }
@@ -177,6 +182,19 @@ func commandInspect(pokeName string) error {
 
 }
 
+func commandPokedex(_ string) error {
+	if len(pokedex) == 0 {
+		fmt.Println("Your Pokedex is empty!")
+		return nil
+	}
+
+	fmt.Println("Your Pokexex:")
+	for key := range pokedex {
+		fmt.Printf("  -%s\n", key)
+	}
+	return nil
+}
+
 func isCaught(baseExp int) bool {
 	var median int = 125
 	var threshold = float32(baseExp) / float32(baseExp+median)
@@ -184,7 +202,7 @@ func isCaught(baseExp int) bool {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	val := r.Float32()
 
-	fmt.Println(baseExp, threshold, val)
+	// fmt.Println(baseExp, threshold, val)
 
 	return val > float32(threshold)
 
